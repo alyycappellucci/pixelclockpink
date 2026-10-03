@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pixel clock</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{display:grid;place-items:center;background:transparent;font-family:'Press Start 2P',ui-monospace,Menlo,monospace}
+.clock{width:min(100%,440px);aspect-ratio:16/10;margin:10px;padding:24px;border-radius:24px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:7%;color:#fff;
+  background:linear-gradient(135deg,#ffe3ee 0%,#ffc2d8 50%,#f9a8c9 100%);text-shadow:3px 3px 0 #e87aa6}
+.time{display:flex;align-items:center;gap:3.5%;font-size:clamp(26px,9vw,44px);line-height:1}
+.time span:nth-child(even){opacity:.8}
+.date{font-size:clamp(9px,2.6vw,12px);letter-spacing:1px;text-shadow:2px 2px 0 #e87aa6}
+</style>
+</head>
+<body>
+<main class="clock" role="timer" aria-label="Clock">
+  <div class="time"><span id="h">00</span><span>:</span><span id="m">00</span><span>:</span><span id="s">00</span></div>
+  <div class="date" id="d"></div>
+</main>
+<script>
+const p=n=>String(n).padStart(2,'0'), $=id=>document.getElementById(id);
+function tick(){
+  const n=new Date();
+  $('h').textContent=p(n.getHours());
+  $('m').textContent=p(n.getMinutes());
+  $('s').textContent=p(n.getSeconds());
+  $('d').textContent=n.toLocaleDateString('en-GB',{weekday:'short',day:'2-digit',month:'short',year:'numeric'}).replace(/,/g,'').toUpperCase();
+}
+tick(); setInterval(tick,1000);
+</script>
+</body>
+</html>
